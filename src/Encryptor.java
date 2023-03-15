@@ -29,15 +29,16 @@ public class Encryptor{
      */
     public void fillBlock(String str) {
         /* to be implemented in part (a) */
-        for(int r =0;r< letterBlock.length;r++){
-            for(int c =0;c<letterBlock[0].length;c++){
-                for(int k = 0;k<str.length();k++){
-                        letterBlock[r][c] = str.substring(k,k+1);
+        int i = 0;
+        for (int row = 0; row < letterBlock.length; row++) {
+            for (int column = 0; column < letterBlock[0].length; column++) {
+                if (i < str.length()) {
+                    letterBlock[row][column] = str.substring(i, i + 1);
                 }
-                if(letterBlock[r][c]==null){
-                    letterBlock[r][c]="A";
+                else {
+                    letterBlock[row][column] = "A";
                 }
-
+                i++;
             }
         }
     }
@@ -49,14 +50,13 @@ public class Encryptor{
      *   @return the encrypted string from letterBlock
      */
     public String encryptBlock() {
-
-        for(int c=0;c< letterBlock[0].length;c++){
-            for(int r=0;r< letterBlock.length;r++){
-                letterBlock[r][c]=;
-
+        String str = "";
+        for (int column = 0; column < letterBlock[0].length; column++) {
+            for (int row = 0; row < letterBlock.length; row++) {
+                str += letterBlock[row][column];
             }
         }
-        return " ";
+        return str;
 
     }
 
@@ -68,9 +68,20 @@ public class Encryptor{
      */
     public String encryptMessage(String message) {
         /* to be implemented in part (c) */
-      
-
-        return " ";
+        String s = "";
+        int n = numCols * numRows;
+        int x = message.length() / n;
+        if(message.length() % n != 0){
+            x++;
+        }
+        for(int i = 0; i < x; i++) {
+            fillBlock(message);
+            s += encryptBlock();
+            if(message.length() > n) {
+                message = message.substring(n);
+            }
+        }
+        return s;
     }
 
     /**  Decrypts an encrypted message. All filler 'A's that may have been
@@ -97,7 +108,35 @@ public class Encryptor{
      */
     public String decryptMessage(String encryptedMessage) {
         /* to be implemented in part (d) */
-        return " ";
+        String[][] decryption = new String[numRows][numCols];
+        String s = "";
+        int num = encryptedMessage.length() / (numRows * numCols);
+        if((encryptedMessage.length() % (numRows * numCols)) != 0) {
+            num ++;
+        }
+        int index = 0;
+        for (int k = 0; k < num; k ++) {
+            for (int i = 0; i < numCols; i++) {
+                for (int j = 0; j < numRows; j++) {
+                    decryption[j][i] = encryptedMessage.substring(index, index + 1);
+                    index++;
+                }
+            }
+
+            for (int i = 0; i < numRows; i++) {
+                for (int j = 0; j < numCols; j++) {
+                    s= s + decryption[i][j];
+                }
+            }
+        }
+
+        while (s.charAt(s.length() - 1) == 'A') {
+           s = s.substring(0, s.length() - 1);
+        }
+
+        return s;
+
+
     }
 }
 
