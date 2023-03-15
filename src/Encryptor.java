@@ -108,7 +108,7 @@ public class Encryptor{
      */
     public String decryptMessage(String encryptedMessage) {
         /* to be implemented in part (d) */
-        String[][] decryption = new String[numRows][numCols];
+        String[][] decrypt = new String[numRows][numCols];
         String s = "";
         int num = encryptedMessage.length() / (numRows * numCols);
         if((encryptedMessage.length() % (numRows * numCols)) != 0) {
@@ -118,14 +118,14 @@ public class Encryptor{
         for (int k = 0; k < num; k ++) {
             for (int i = 0; i < numCols; i++) {
                 for (int j = 0; j < numRows; j++) {
-                    decryption[j][i] = encryptedMessage.substring(index, index + 1);
+                    decrypt[j][i] = encryptedMessage.substring(index, index + 1);
                     index++;
                 }
             }
 
             for (int i = 0; i < numRows; i++) {
                 for (int j = 0; j < numCols; j++) {
-                    s= s + decryption[i][j];
+                    s= s + decrypt[i][j];
                 }
             }
         }
